@@ -49,25 +49,7 @@ public abstract class BaseCommandBuilder extends Builder {
             throws CruiseControlException {
         final long startTime = System.currentTimeMillis();
 
-        publisher.consumeLine("Checkpoint 1");
-
-        publisher.consumeLine("Checkpoint 1 - " + FileUtil.getSandboxDirectory());
-        publisher.consumeLine("Checkpoint 1 - " + FileUtil.applyBaseDirIfRelative(FileUtil.getSandboxDirectory(), workingDir));
-
-        CommandLine commandLine;
-
-        try {
-            commandLine = buildCommandLine();
-        }
-        catch (RuntimeException e ) {
-            publisher.consumeLine("Checkpoint 1 - error - " + e);
-            throw e;
-        }
-
-        publisher.consumeLine("Checkpoint 2");
-
-        String message3 = "Working directory <><><> \"" + commandLine.getWorkingDirectory().getAbsolutePath() + "\".";
-        publisher.consumeLine(message3);
+        CommandLine commandLine = buildCommandLine();
 
         if (!commandLine.getWorkingDirectory().isDirectory()) {
             String message = "Working directory \"" + commandLine.getWorkingDirectory().getAbsolutePath() + "\" is not a directory!";
