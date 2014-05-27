@@ -80,6 +80,10 @@ public class CruiseConfig implements Validatable {
         String pipeLineWorkingDir = System.getenv("GO_PIPELINE_WORKING_DIR");
 
         if (pipeLineWorkingDir != null) {
+            if (!pipeLineWorkingDir.isEmpty() && !pipeLineWorkingDir.endsWith("/")) {
+                pipeLineWorkingDir += "/";
+            }
+
             WORKING_BASE_DIR = pipeLineWorkingDir;
         }
     }

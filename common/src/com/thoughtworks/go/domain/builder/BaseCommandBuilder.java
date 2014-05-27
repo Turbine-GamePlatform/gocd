@@ -34,6 +34,9 @@ import org.apache.log4j.Logger;
 public abstract class BaseCommandBuilder extends Builder {
     private static final Logger LOG = Logger.getLogger(BaseCommandBuilder.class);
 
+    public static final String GO_SANDBOX_DIR = "GO_SANDBOX_DIR";
+    public static final String GO_COMMAND_WORKING_DIR = "GO_COMMAND_WORKING_DIR";
+
     protected String command;
     protected File workingDir;
     protected String errorString = "";
@@ -57,6 +60,9 @@ public abstract class BaseCommandBuilder extends Builder {
             setBuildError(buildLogElement, message);
             throw new CruiseControlException(message);
         }
+
+        commandLine.env().put(GO_SANDBOX_DIR, FileUtil.getSandboxDirectory().getAbsolutePath());
+        commandLine.env().put(GO_COMMAND_WORKING_DIR, commandLine.getWorkingDirectory().getAbsolutePath());
 
         String message2 = "Working directory \"" + commandLine.getWorkingDirectory().getAbsolutePath() + "\".";
         publisher.consumeLine(message2);
